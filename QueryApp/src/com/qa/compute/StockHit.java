@@ -1,28 +1,34 @@
 package com.qa.compute;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Map.Entry;
 
-import com.qa.core.CountList;
+import com.qa.core.CountListMap;
 import com.qa.core.QueryMap;
 import com.qa.core.StockName;
 
 public class StockHit {
+	QueryMap qm;
+	
+	public StockHit(QueryMap qm) {
+		this.qm = qm;
+	}
 
-	public int getCount(QueryMap qm, StockName name,long times) {
+	public int getCount(StockName name,long times) {
 		int count =0;
-		HashSet<CountList> qmList = qm.getListOf(name);
+		CountListMap qmList = qm.getListOf(name);
 		if(null == qmList) {
 			return count;
 		} else {
-			Iterator<CountList> it = qmList.iterator();
-			while (it.hasNext()) {
-				CountList cl = it.next();
-				if(cl.getTimeStamp() >= times) {
-					count+=cl.getCount();
+			for(Entry<Long, Integer> mp : qmList.getCountListMap().entrySet()) {
+				if(mp.getKey()>= times) {
+					count+=mp.getValue();
 				}
-	        }
+			}
 		}
 		return count;
+	}
+	
+	public void stockFlush() {
+		
 	}
 }

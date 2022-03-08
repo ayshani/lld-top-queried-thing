@@ -1,10 +1,10 @@
 package com.qa.core;
 
-public class CountList {
+public class TimeCount {
 	int count;
 	long ts;
 	
-	public CountList(long tss) {
+	public TimeCount(long tss) {
 		ts = tss;
 		count=1;
 	}
